@@ -57,7 +57,7 @@ function App3() {
       <h2>{lastComponentMessage}</h2>
     </>
   );
-}
+} 
 
 const Todos = ({ todos, addTodo }) => {
   console.log("child render");

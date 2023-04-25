@@ -12,6 +12,13 @@ import { createContext } from "react";
 const messageContext = createContext();
 
 function App() {
+
+  const [todos, setTodos] = useState([]);
+
+  const addTodo = useCallback(() => {
+    setTodos((t) => [...t, "New Todo"]);
+  }, [todos]);
+
   const [lastComponentMessage, setLastComponentMessage] = useState(
     "Hello from last component"
   );
@@ -34,6 +41,7 @@ function App() {
         onChange={(e) => setInputValue(e.target.value)}
       />
       <h1>Render Count: {count.current}</h1>
+      <Todos todos={todos} addTodo={addTodo} />
     </>
   );
 }
@@ -50,5 +58,18 @@ function App3() {
     </>
   );
 }
+
+const Todos = ({ todos, addTodo }) => {
+  console.log("child render");
+  return (
+    <>
+      <h2>My Todos</h2>
+      {todos.map((todo, index) => {
+        return <p key={index}>{todo}</p>;
+      })}
+      <button onClick={addTodo}>Add Todo</button>
+    </>
+  );
+};
 
 export default App;

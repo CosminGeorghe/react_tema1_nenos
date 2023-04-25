@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  useState,
+  useEffect,
+  useRef,
+  useReducer,
+  useMemmo,
+  useCallback,
+  useContext,
+} from "react";
+import { createContext } from "react";
+
+const messageContext = createContext();
 
 function App() {
+  const [lastComponentMessage, setLastComponentMessage] = useState(
+    "Hello from last component"
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <messageContext.Provider value={lastComponentMessage}>
+       <App2/>;
+    </messageContext.Provider>
+  );
+}
+
+function App2() {
+  return <App3/>;
+}
+
+function App3() {
+  const lastComponentMessage = useContext(messageContext);
+  return (
+    <>
+      <h2>{lastComponentMessage}</h2>
+    </>
   );
 }
 
